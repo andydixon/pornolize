@@ -1,6 +1,6 @@
 <?php 
 /**
- * example for andydixon\pornolize
+ * example for andydixon\Pornolize
  *
  * Used for rewriting content
  *
