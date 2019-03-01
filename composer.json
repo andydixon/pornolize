@@ -16,6 +16,10 @@
      "autoload": {
         "psr-0": {
             "Pornolize": "/"
-        }
+        },
+        "psr-4": {
+            "Pornolize\\": "/"
+        },
+
     }
 }
