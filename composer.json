@@ -2,7 +2,7 @@
     "name": "andydixon/pornolize",
     "description": "PHP Translator used for pornolize.com to vulgarise text",
     "type": "library",
-    "license": "CC BY-ND",
+    "license": "CC-BY-NC-ND-4.0",
     "authors": [
         {
             "name": "Andy Dixon",
