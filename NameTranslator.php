@@ -29,6 +29,12 @@ class NameTranslator extends AbstractTranslator
         'h6'       => 70,
     ];
 
+    /**
+     * NameTranslator constructor.
+     * @param string $text  Text to be translated
+     * @param string $lang  can be one of 'dk', 'de', 'en', 'es', 'hr', 'hu', 'no', 'se'
+     * @param string $nodeName  Used as an identifier for the translated object - set to a blank string
+     */
     public function __construct(string $text, string $lang, string $nodeName)
     {
         $this->text = preg_split('/' . '\s+' . '/', $text);
@@ -41,6 +47,11 @@ class NameTranslator extends AbstractTranslator
         $this->dictionary = explode("\n", $names);
     }
 
+    /**
+     * Check to see if the first character is uppercase
+     * @param string $word
+     * @return bool
+     */
     private function upperStart(string $word)
     {
         return
@@ -49,7 +60,10 @@ class NameTranslator extends AbstractTranslator
             && (strlen($word)>1 && $word[1] !== mb_strtoupper($word[1]));
     }
 
-
+    /**
+     * Translate the text passed to the object
+     * @return $this
+     */
     public function translate()
     {
 
@@ -72,7 +86,8 @@ class NameTranslator extends AbstractTranslator
         $spliceOffset = 0;
         foreach ($nameMiddle as $start) {
             /** @var $spliceOffset int - offset of how many replacements made so far. need to add to the $start because
-             * each splice pushes the array keys up one after the bit spliced */
+             * each splice pushes the array keys up one after the bit spliced
+             */
             if ($this->shouldTranslate()) {
                 array_splice($this->text, $start + $spliceOffset, 0, '"' . $this->randomWord() . '"');
                 $spliceOffset++;

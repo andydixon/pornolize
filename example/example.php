@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * example for andydixon\pornolize
  *
@@ -9,7 +9,7 @@
  *
  * @package    andydixon/pornolize
  * @author     Andy Dixon <ajdixon0283@outlook.com>
-**/
+ **/
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -21,16 +21,16 @@ $language = "en"; // can be one of 'dk', 'de', 'en', 'es', 'hr', 'hu', 'no', 'se
 
 try {
 
-	// Pornolize any names that may exist
-	$translator = Pornolize\NameTranslator::make($text, $language, '');
-	$text=$translator->translate()->__toString();
+    // Pornolize any names that may exist
+    $translator = Pornolize\NameTranslator::make($text, $language, '');
+    $text = $translator->translate()->__toString();
 
-	// Pornolize main content
-	$translator = Pornolize\ProseTranslator::make($text, $language, '');
-	$text = $translator->translate()->__toString();
+    // Pornolize main content
+    $translator = Pornolize\ProseTranslator::make($text, $language, '');
+    $text = $translator->translate()->__toString();
 
-	echo $text;
+    echo $text;
 
 } catch (\Exception $e) {
-	echo "An error ocurred: " . $e->getMessage();
+    echo "An error ocurred: " . $e->getMessage();
 }

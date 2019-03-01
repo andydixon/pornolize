@@ -9,7 +9,7 @@
  *
  * @package    andydixon/Pornolize
  * @author     Andy Dixon <ajdixon0283@outlook.com>
-**/
+ **/
 
 namespace Pornolize;
 
@@ -22,15 +22,21 @@ class ProseTranslator extends AbstractTranslator
     protected $nodeName = '';
     protected $weightMap = [
         'fallback' => 50,
-        'p'        => 30,
-        'h1'       => 90,
-        'h2'       => 90,
-        'h3'       => 80,
-        'h4'       => 80,
-        'h5'       => 70,
-        'h6'       => 70,
+        'p' => 30,
+        'h1' => 90,
+        'h2' => 90,
+        'h3' => 80,
+        'h4' => 80,
+        'h5' => 70,
+        'h6' => 70,
     ];
 
+    /**
+     * ProseTranslator constructor.
+     * @param string $text Text to be translated
+     * @param string $lang can be one of 'dk', 'de', 'en', 'es', 'hr', 'hu', 'no', 'se'
+     * @param string $nodeName Used as an identifier for the translated object - set to a blank string
+     */
     public function __construct(string $text, string $lang, string $nodeName)
     {
         $this->text = preg_split('/' . '\s+' . '/', $text);
@@ -48,6 +54,10 @@ class ProseTranslator extends AbstractTranslator
         }
     }
 
+    /**
+     * Translate the text passed to the object
+     * @return $this
+     */
     public function translate()
     {
         $this->text = array_map(function ($word) {
@@ -63,7 +73,11 @@ class ProseTranslator extends AbstractTranslator
         return $this;
     }
 
-
+    /**
+     * Check if the word is an adjective
+     * @param $word
+     * @return bool
+     */
     private function adjectiveMatcher($word)
     {
         preg_match('/' . '\w{3,10}(' . implode('|', $this->adjectiveEndings) . ')' . '/', $word, $matches);
