@@ -39,7 +39,7 @@ abstract class AbstractTranslator
 
     public function __toString()
     {
-        return htmlspecialchars(implode(' ', $this->text));
+        return implode(' ', $this->text);
     }
 
     protected function randomWord()
