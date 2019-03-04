@@ -1,4 +1,7 @@
-# andydixon/pornolize - The code behind pornolize.com #
+# pornolize - Pornolize Text Like A Boss #
+![https://scrutinizer-ci.com/g/andydixon/pornolize/badges/quality-score.png?b=master]() ![https://scrutinizer-ci.com/g/andydixon/pornolize/badges/build.png?b=master]() 
+
+This code originated from the original back-end code on [http://www.pornolize.com](The Pornolizer) but has been redeveloped into a composer compatible module free to use and abuse.
 
 ### To install ###
 
@@ -37,5 +40,7 @@ try {
 ```
 
 The code above is pretty much self explanatory (I'm no good at writing documentation for the average human), however for any Translator object, the final option changes how abusive the text can be, the higher the ~~better~~ more words are added. 
+
+Changes and improvements are welcome, just send me a pull request for review.
 
 Any questions can be dropped to me by email - ajdixon0283 at outlook dot com, but you will get what you give - obnoxiousness will incur wrath, and additional wrath can be provided to those who have their cranium lodged in their rectums free of charge.
