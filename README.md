@@ -1,7 +1,7 @@
 # pornolize - Pornolize Text Like A Boss #
 ![ ](https://scrutinizer-ci.com/g/andydixon/pornolize/badges/quality-score.png?b=master) ![ ](https://scrutinizer-ci.com/g/andydixon/pornolize/badges/build.png?b=master) 
 
-This code originated from the original back-end code on [http://www.pornolize.com](The Pornolizer) but has been redeveloped into a composer compatible module free to use and abuse.
+This code originated from the original back-end code on [The Pornolizer](http://www.pornolize.com) but has been redeveloped into a composer compatible module free to use and abuse.
 
 ### To install ###
 
