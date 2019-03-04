@@ -20,32 +20,45 @@ class ProseTranslator extends AbstractTranslator
     protected $lang = 'en';
     protected $adjectiveEndings = ['ing', 'ed', 's'];
     protected $nodeName = '';
-    protected $weightMap = [
-        'fallback' => 50,
-        'p' => 30,
-        'h1' => 90,
-        'h2' => 90,
-        'h3' => 80,
-        'h4' => 80,
-        'h5' => 70,
-        'h6' => 70,
-    ];
+    protected $swearability = 50;
 
     /**
      * ProseTranslator constructor.
      * @param string $text Text to be translated
      * @param string $lang can be one of 'dk', 'de', 'en', 'es', 'hr', 'hu', 'no', 'se'
-     * @param string $nodeName Used as an identifier for the translated object - set to a blank string
+     * @param int    $swearability   0-100 on chance of injection randomisation being true
      */
-    public function __construct(string $text, string $lang, string $nodeName)
+    public function __construct(string $text, string $lang, int $swearability)
     {
-        $this->text = preg_split('/' . '\s+' . '/', $text);
-        $this->nodeName = $nodeName;
         $this->lang = $lang;
+
+        /**
+         * Handle loading the dictionary
+         */
+        if(!file_exists(__DIR__ . '/dictionaries/' . $lang . '_adjectives.txt'))
+            throw new PornolizerDictionaryException('Dictionary for '.$lang . ' does not exist');
 
         $words = file_get_contents(__DIR__ . '/dictionaries/' . $lang . '_adjectives.txt');
         $this->dictionary = explode("\n", $words);
 
+        /**
+         * Validate the swearability frequency, throw exception if out of bounds
+         */
+        if($swearability>=0 && $swearability <=100) {
+            $this->swearability = $swearability;
+        } else {
+            throw new PornolizerSwearabilityException('Value is out-of-bounds');
+        }
+
+        /**
+         * Split the words into an array
+         */
+        $this->text = preg_split('/' . '\s+' . '/', $text);
+
+        /**
+         * Adjective endings
+         * @todo add additional endings for other supported languages
+         */
         switch ($lang) {
             case 'en':
             default:

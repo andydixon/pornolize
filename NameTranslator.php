@@ -10,7 +10,7 @@
  *
  * @package    andydixon/Pornolize
  * @author     Andy Dixon <ajdixon0283@outlook.com>
-**/
+ **/
 
 namespace Pornolize;
 
@@ -18,33 +18,45 @@ namespace Pornolize;
 class NameTranslator extends AbstractTranslator
 {
     protected $lang = 'en';
-    protected $weightMap = [
-        'fallback' => 50,
-        'p'        => 30,
-        'h1'       => 90,
-        'h2'       => 90,
-        'h3'       => 80,
-        'h4'       => 80,
-        'h5'       => 70,
-        'h6'       => 70,
-    ];
+    protected $swearability = 50;
 
     /**
      * NameTranslator constructor.
-     * @param string $text  Text to be translated
-     * @param string $lang  can be one of 'dk', 'de', 'en', 'es', 'hr', 'hu', 'no', 'se'
-     * @param string $nodeName  Used as an identifier for the translated object - set to a blank string
+     * @param string $text Text to be translated
+     * @param string $lang can be one of 'dk', 'de', 'en', 'es', 'hr', 'hu', 'no', 'se'
+     * @param int $swearability 0-100 on chance of injection randomisation being true
+     * @throws PornolizerDictionaryException
+     * @throws PornolizerSwearabilityException
      */
-    public function __construct(string $text, string $lang, string $nodeName)
+    public function __construct(string $text, string $lang, int $swearability)
     {
+        /**
+         * Handle loading the dictionary
+         */
+        if (!file_exists(__DIR__ . '/dictionaries/' . $lang . '_adjectives.txt'))
+            throw new PornolizerDictionaryException('Name dictionary for ' . $lang . ' does not exist');
+
+        $names = file_get_contents(__DIR__ . '/dictionaries/' . $lang . '_names.txt');
+        $this->dictionary = explode("\n", $names);
+
+        /**
+         * Validate the swearability frequency, throw exception if out of bounds
+         */
+        if ($swearability >= 0 && $swearability <= 100) {
+            $this->swearability = $swearability;
+        } else {
+            throw new PornolizerSwearabilityException('Value is out-of-bounds');
+        }
+
+        /**
+         * Split the words into an array
+         */
         $this->text = preg_split('/' . '\s+' . '/', $text);
         $this->text = array_filter($this->text, function ($word) {
             return !empty($word);
         });
         $this->text = array_values($this->text);
 
-        $names = file_get_contents(__DIR__ . '/dictionaries/' . $lang . '_names.txt');
-        $this->dictionary = explode("\n", $names);
     }
 
     /**
@@ -57,7 +69,7 @@ class NameTranslator extends AbstractTranslator
         return
             ctype_alnum($word[0])
             && $word[0] === mb_strtoupper($word[0])
-            && (strlen($word)>1 && $word[1] !== mb_strtoupper($word[1]));
+            && (strlen($word) > 1 && $word[1] !== mb_strtoupper($word[1]));
     }
 
     /**

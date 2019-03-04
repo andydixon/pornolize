@@ -19,16 +19,7 @@ abstract class AbstractTranslator
     protected $lang = '';
     protected $nodeName = '';
     protected $dictionary = [];
-    protected $weightMap = [
-        'fallback' => 50,
-        'p'        => 30,
-        'h1'       => 90,
-        'h2'       => 90,
-        'h3'       => 80,
-        'h4'       => 80,
-        'h5'       => 70,
-        'h6'       => 70,
-    ];
+    protected $swearability = 50;
 
     /**
      * @param string $text Text to be translated
@@ -36,9 +27,9 @@ abstract class AbstractTranslator
      * @param string $nodeName Used as an identifier for the translated object - set to a blank string
      * @return AbstractTranslator
      */
-    public static function make(string $text, string $lang, string $nodeName)
+    public static function make(string $text, string $lang, int $swearability)
     {
-        return new static($text, $lang, $nodeName);
+        return new static($text, $lang, $swearability);
     }
 
     abstract public function translate();
@@ -67,6 +58,6 @@ abstract class AbstractTranslator
      */
     protected function shouldTranslate()
     {
-        return mt_rand(1, 100) <= (isset($this->weightMap[$this->nodeName]) ? $this->weightMap[$this->nodeName] : $this->weightMap['fallback']);
+        return mt_rand(1, 100) <= $this->swearability;
     }
 }
